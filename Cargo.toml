@@ -1,0 +1,11 @@
+[package]
+name = "horizon-mod-rider-hud"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+description = "Rider HUD for Horizon Minecraft: displays mount health, player hunger, and smart jump/exp bars simultaneously while riding."
+
+[lib]
+path = "mixins/rider_hud/runtime.rs"
+
