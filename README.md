@@ -13,13 +13,13 @@ A high-performance, lightweight native Horizon mod for **Minecraft 26.3** that e
 
 - **Simultaneous Mount Health & Player Hunger:**
   - In vanilla Minecraft, mounting a horse replaces your hunger bar with mount health hearts.
-  - **Rider HUD** preserves your player hunger bar at its standard position (`y = h - 39`) and cleanly shifts the mount health hearts upward (`y = h - 49`), allowing you to monitor both your food level and your mount's health at all times.
+  - **Rider HUD** keeps your hunger bar visible in its standard place above the hotbar and displays mount health hearts on the row directly above it, so neither indicator is hidden.
 - **Dynamic Non-Overlapping Layout:**
-  - **Player Health & Absorption:** Left side (`y = h - 39` upwards).
-  - **Player Armor:** Left side above player health.
-  - **Player Hunger:** Right side (`y = h - 39`).
-  - **Mount Health:** Right side (`y = h - 49`, stacking additional rows upward for high-health mounts).
-  - **Air Bubbles:** If the player or mount is submerged in water, air bubbles stack cleanly above the highest mount health row.
+  - **Player Health & Absorption:** Standard position on the left.
+  - **Player Armor:** Stacks above player health on the left.
+  - **Player Hunger:** Standard position on the right above the hotbar.
+  - **Mount Health:** Displayed one row above the hunger bar on the right (stacking additional rows upward for high-health mounts).
+  - **Air Bubbles:** When submerged, bubbles stack cleanly above mount hearts.
 - **Smart Jump & Experience Bar:**
   - During ordinary riding, your standard experience progress bar and level number remain visible.
   - When you press and hold the Jump key to charge a jump (or track camel dash cooldowns), the jump meter dynamically appears in place of the experience bar.
@@ -44,7 +44,7 @@ Rider HUD integrates cleanly with Horizon's native hook points without modifying
 
 | Hook Point | API Level | Purpose |
 |------------|-----------|---------|
-| `native_gui_layer_pre` | API 139 | Cancels the default mount health at `h - 39` and re-renders it at `h - 49`; dynamically swaps the contextual bar between experience and jump meter. |
+| `native_gui_layer_pre` | API 139 | Repositions mount health hearts above the hunger bar; dynamically swaps the contextual bar between experience and jump meter. |
 | `native_health_hud` | API 27 | Renders the player hunger bar while riding and dynamically shifts air bubbles above mount hearts. |
 | `native_mods` | API 1 | Registers the mod into Horizon's native mod menu list. |
 | `native_settings` | API 1 | Populates configurable settings buttons in the in-game UI. |
