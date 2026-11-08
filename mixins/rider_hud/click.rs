@@ -1,8 +1,4 @@
-fn rider_hud_click(
-    game: &mut crate::game::Game<'_>,
-    mod_id: &str,
-    button: usize,
-) {
+fn rider_hud_click(game: &mut crate::game::Game<'_>, mod_id: &str, button: usize) {
     use crate::game::rider_hud as m;
     if mod_id == m::ID {
         match button {
@@ -28,4 +24,3 @@ fn rider_hud_click(
         }
     }
 }
-

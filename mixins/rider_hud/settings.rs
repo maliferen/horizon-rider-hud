@@ -1,8 +1,4 @@
-fn rider_hud_settings(
-    game: &mut crate::game::Game<'_>,
-    mod_id: &str,
-    buttons: &mut Vec<String>,
-) {
+fn rider_hud_settings(game: &mut crate::game::Game<'_>, mod_id: &str, buttons: &mut Vec<String>) {
     use crate::game::rider_hud as m;
     if mod_id == m::ID {
         let enabled = m::is_enabled(|| game.native_setting(m::ID, "enabled"));
@@ -15,4 +11,3 @@ fn rider_hud_settings(
         buttons.push(m::exp_label(exp));
     }
 }
-

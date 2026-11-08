@@ -21,7 +21,8 @@ fn rider_hud_layer_pre(
                 if hearts > 0 {
                     let wi = batch.width as i32;
                     let hi = batch.height as i32 - m::VEHICLE_HEALTH_Y_OFFSET;
-                    let draws = horizon_client::hud_layout::vehicle_health(wi, hi, hearts, mob.health);
+                    let draws =
+                        horizon_client::hud_layout::vehicle_health(wi, hi, hearts, mob.health);
                     horizon_client::hud_layout::paint(batch, &game.gui.atlas, &draws);
                 }
             }
@@ -32,7 +33,12 @@ fn rider_hud_layer_pre(
             let is_jumping = game.mount_jumping();
             let has_waypoints = game.waypoints.has_waypoints();
 
-            if m::should_show_experience_instead_of_jump(is_jumpable, is_jumping, has_waypoints, game.creative) {
+            if m::should_show_experience_instead_of_jump(
+                is_jumpable,
+                is_jumping,
+                has_waypoints,
+                game.creative,
+            ) {
                 // Cancel the empty jump bar and draw the experience progress bar and level
                 *canceled = true;
 
@@ -40,7 +46,8 @@ fn rider_hud_layer_pre(
                     let wi = batch.width as i32;
                     let hi = batch.height as i32;
                     let atlas = &game.gui.atlas;
-                    let width = |s: &str| horizon_client::hud::HudBatch::text_width(atlas, s) as i32;
+                    let width =
+                        |s: &str| horizon_client::hud::HudBatch::text_width(atlas, s) as i32;
                     let draws = horizon_client::hud_layout::experience(
                         wi,
                         hi,
@@ -55,4 +62,3 @@ fn rider_hud_layer_pre(
         }
     }
 }
-

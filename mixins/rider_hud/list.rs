@@ -7,4 +7,3 @@ fn rider_hud_list(mods: &mut Vec<crate::game::native_hooks::NativeMod>) {
         keys: Vec::new(),
     });
 }
-

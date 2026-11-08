@@ -2,15 +2,19 @@ name: Release Horizon Native Mod
 
 on:
   push:
+    branches: [main]
     tags:
       - 'v*'
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build-and-release:
+  test-and-verify:
+    name: Test & Verify Native Mod
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -18,12 +22,17 @@ jobs:
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: '1.99.1'
+          components: rustfmt, clippy
 
       - name: Run unit tests
         run: cargo test --verbose
 
-      - name: Check code formatting
-        run: cargo fmt --check
+      - name: Check code formatting (all files)
+        run: |
+          cargo fmt --check
+          find mixins -name "*.rs" -exec rustfmt --check {} +
 
       - name: Run clippy
         run: cargo clippy -- -D warnings
@@ -42,6 +51,18 @@ jobs:
           sha=$(sha256sum dist/*.hnmod | awk '{print $1}')
           echo "SHA256: $sha"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Install Horizon build dependencies
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev libudev-dev pkg-config
+
+      - name: Verify full native mod against Horizon engine (native.py check)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone --depth 1 https://github.com/horizon-rust/horizon-mods.git /tmp/horizon-mods
+          mkdir -p /tmp/horizon-mods/native/rider-hud
+          cp -r compatibility.json mixins LICENSE /tmp/horizon-mods/native/rider-hud/
+          python3 /tmp/horizon-mods/native/tools/native.py check rider-hud --horizon latest
 
       - name: Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')

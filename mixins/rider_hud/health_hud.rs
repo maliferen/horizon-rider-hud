@@ -55,4 +55,3 @@ fn rider_hud_health_hud(
         *draws = Some(layout_draws);
     }
 }
-

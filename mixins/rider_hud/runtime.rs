@@ -30,7 +30,11 @@ pub const HUD_ROW_STEP: i32 = 10;
 /// - 21..=30 hearts -> 3 rows.
 #[inline]
 pub fn vehicle_heart_rows(hearts: i32) -> i32 {
-    if hearts <= 0 { 0 } else { (hearts + 9) / 10 }
+    if hearts <= 0 {
+        0
+    } else {
+        (hearts + 9) / 10
+    }
 }
 
 /// Computes the vertical pixel shift for air bubbles so they sit neatly above vehicle hearts.
